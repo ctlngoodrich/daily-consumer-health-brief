@@ -2,7 +2,7 @@
 
 > Stay sharp on consumer health — without reading everything yourself.
 
-A self-hosted Claude skill that delivers a daily digest covering consumer health news and builder insights. Runs locally or on a schedule via GitHub Actions.
+A Claude Code skill that delivers a curated daily brief on consumer health news and builder insights — straight to your inbox, every morning.
 
 ---
 
