@@ -6,8 +6,7 @@ raw-feed.json
 digest-ready.json
 digest-output.md
 
-# State & cache — personal to your machine
-state-feed.json
+# Cache — personal to your machine
 youtube-handle-cache.json
 
 # Node

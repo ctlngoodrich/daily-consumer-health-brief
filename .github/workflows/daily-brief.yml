@@ -31,8 +31,11 @@ jobs:
       - name: Generate feed
         working-directory: scripts
         env:
-          TWITTER_BEARER_TOKEN: ${{ secrets.TWITTER_BEARER_TOKEN }}
-          LOOKBACK_HOURS: '28'
+          PODCAST_INDEX_API_KEY: ${{ secrets.PODCAST_INDEX_API_KEY }}
+          PODCAST_INDEX_API_SECRET: ${{ secrets.PODCAST_INDEX_API_SECRET }}
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          NEWS_LOOKBACK_HOURS: '28'
+          BUILDER_LOOKBACK_HOURS: '168'
         run: node generate-feed.js
 
       - name: Prepare digest

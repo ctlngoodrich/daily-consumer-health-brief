@@ -73,29 +73,45 @@ function buildPrompt(digest) {
   // Builder insight section
   prompt += `---\n\n## RAW DATA — SECTION 2: BUILDER INSIGHT\n\n`;
 
-  if (builder_insight.substacks.length > 0) {
+  if (builder_insight.substacks?.length > 0) {
     prompt += `### Substack / Newsletter Articles\n`;
     prompt += `Summarization instructions:\n${summarizeBuilder}\n\n`;
     prompt += JSON.stringify(builder_insight.substacks, null, 2) + '\n\n';
   }
 
-  if (builder_insight.podcasts.length > 0) {
-    prompt += `### Podcast Episodes\n`;
+  if (builder_insight.podcasts?.length > 0) {
+    prompt += `### Podcast Episodes (owned shows)\n`;
     prompt += `Summarization instructions:\n${summarizePodcast}\n\n`;
     prompt += JSON.stringify(builder_insight.podcasts, null, 2) + '\n\n';
   }
 
-  if (builder_insight.twitter.length > 0) {
-    prompt += `### Builder X/Twitter Posts\n`;
-    prompt += `Summarization instructions:\n${summarizeBuilder}\n\n`;
-    prompt += JSON.stringify(builder_insight.twitter, null, 2) + '\n\n';
+  if (builder_insight.podcast_guests?.length > 0) {
+    prompt += `### Builder Guest Appearances (Podcast Index)\n`;
+    prompt += `Summarization instructions:\n${summarizePodcast}\n\n`;
+    prompt += JSON.stringify(builder_insight.podcast_guests, null, 2) + '\n\n';
   }
 
-  if (
-    builder_insight.substacks.length === 0 &&
-    builder_insight.podcasts.length === 0 &&
-    builder_insight.twitter.length === 0
-  ) {
+  if (builder_insight.interviews?.length > 0) {
+    prompt += `### Text Interviews (Google News)\n`;
+    prompt += `Summarization instructions:\n${summarizeBuilder}\n\n`;
+    prompt += JSON.stringify(builder_insight.interviews, null, 2) + '\n\n';
+  }
+
+  if (builder_insight.youtube?.length > 0) {
+    prompt += `### YouTube Interview Videos\n`;
+    prompt += `Summarization instructions:\n${summarizeBuilder}\n\n`;
+    prompt += JSON.stringify(builder_insight.youtube, null, 2) + '\n\n';
+  }
+
+  if (builder_insight.mentions?.length > 0) {
+    prompt += `### Builder Mentions in Tracked Content\n`;
+    prompt += `Summarization instructions:\n${summarizeBuilder}\n\n`;
+    prompt += JSON.stringify(builder_insight.mentions, null, 2) + '\n\n';
+  }
+
+  const hasBuilderContent = ['substacks','podcasts','podcast_guests','interviews','youtube','mentions']
+    .some(k => builder_insight[k]?.length > 0);
+  if (!hasBuilderContent) {
     prompt += `*No new builder content fetched today.*\n\n`;
   }
 
@@ -198,11 +214,15 @@ function updateState(newIds) {
 // ─── Main ─────────────────────────────────────────────────────────────────────
 
 async function main() {
+  const bi = digest.sections.builder_insight;
   const totalItems =
     digest.sections.daily_news.length +
-    digest.sections.builder_insight.substacks.length +
-    digest.sections.builder_insight.podcasts.length +
-    digest.sections.builder_insight.twitter.length;
+    (bi.substacks?.length || 0) +
+    (bi.podcasts?.length || 0) +
+    (bi.podcast_guests?.length || 0) +
+    (bi.interviews?.length || 0) +
+    (bi.youtube?.length || 0) +
+    (bi.mentions?.length || 0);
 
   if (totalItems === 0) {
     console.log('ℹ No new content to deliver. Skipping email.');
