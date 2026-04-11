@@ -1,0 +1,45 @@
+{
+  "sources": [
+    {
+      "id": "fitt-insider",
+      "name": "Fitt Insider",
+      "homepage": "https://fittinsider.com",
+      "feeds": [
+        {
+          "name": "Articles, Reports & Daily Briefing",
+          "url": "https://insider.fitt.co/feed/",
+          "type": "rss"
+        }
+      ],
+      "podcast": {
+        "name": "Fitt Insider Podcast",
+        "rss": "https://rss.libsyn.com/shows/205915/destinations/1477619.xml",
+        "type": "podcast"
+      }
+    },
+    {
+      "id": "out-of-pocket",
+      "name": "Out of Pocket",
+      "homepage": "https://outofpocket.substack.com/",
+      "feeds": [
+        {
+          "name": "Newsletter & Articles",
+          "url": "https://outofpocket.substack.com/feed",
+          "type": "substack"
+        }
+      ]
+    },
+    {
+      "id": "rock-health",
+      "name": "Rock Health",
+      "homepage": "https://rockhealth.com",
+      "feeds": [
+        {
+          "name": "Blog & Reports",
+          "url": "https://rockhealth.com/feed/",
+          "type": "rss"
+        }
+      ]
+    }
+  ]
+}

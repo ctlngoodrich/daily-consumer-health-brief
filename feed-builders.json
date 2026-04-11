@@ -1,0 +1,94 @@
+{
+  "substacks": [
+    {
+      "id": "health-tech-builders",
+      "name": "Health Tech Builders",
+      "author": "Julia Yoo",
+      "url": "https://healthtechbuilders.substack.com/",
+      "feed": "https://healthtechbuilders.substack.com/feed"
+    },
+    {
+      "id": "mark-hyman-substack",
+      "name": "The Focus with Mark Hyman",
+      "author": "Mark Hyman",
+      "url": "https://markhyman.substack.com/",
+      "feed": "https://markhyman.substack.com/feed"
+    }
+  ],
+  "podcasts": [
+    {
+      "id": "startup-health-now",
+      "name": "Startup Health NOW",
+      "rss": "https://startup-health-now.blubrry.net/feed/podcast/"
+    },
+    {
+      "id": "huberman-lab",
+      "name": "Huberman Lab",
+      "rss": "https://feeds.megaphone.fm/hubermanlab"
+    },
+    {
+      "id": "doctors-farmacy",
+      "name": "The Dr. Hyman Show",
+      "rss": "https://feeds.megaphone.fm/thedoctorsfarmacy",
+      "note": "Mark Hyman's podcast (formerly The Doctor's Farmacy)"
+    }
+  ],
+  "builders": [
+    {
+      "company": "Oura",
+      "people": [
+        {
+          "name": "Tom Hale",
+          "title": "CEO",
+          "content_types": ["interviews", "conference_talks"]
+        },
+        {
+          "name": "Dorothy Kilroy",
+          "title": "Chief Commercial Officer",
+          "content_types": ["interviews"]
+        }
+      ]
+    },
+    {
+      "company": "Whoop",
+      "people": [
+        {
+          "name": "Will Ahmed",
+          "title": "CEO & Co-founder",
+          "content_types": ["podcasts", "guest_podcasts", "interviews"]
+        }
+      ]
+    },
+    {
+      "company": "Midi Health",
+      "people": [
+        {
+          "name": "Joanna Strober",
+          "title": "CEO & Co-founder",
+          "content_types": ["podcasts", "interviews"],
+          "note": "LinkedIn not automatable via RSS — track manually or via podcast guest appearances"
+        }
+      ]
+    },
+    {
+      "company": "Function Health",
+      "people": [
+        {
+          "name": "Mark Hyman",
+          "title": "Co-founder",
+          "content_types": ["podcasts", "substacks", "interviews"]
+        }
+      ]
+    },
+    {
+      "company": "Eight Sleep",
+      "people": [
+        {
+          "name": "Matteo Franceschetti",
+          "title": "CEO & Co-founder",
+          "content_types": ["interviews", "podcasts"]
+        }
+      ]
+    }
+  ]
+}

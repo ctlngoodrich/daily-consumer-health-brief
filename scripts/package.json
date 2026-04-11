@@ -1,0 +1,15 @@
+{
+  "name": "daily-consumer-health-brief",
+  "version": "1.0.0",
+  "description": "Daily consumer health news and builder insight digest, delivered by email",
+  "type": "module",
+  "scripts": {
+    "fetch": "node --env-file=../.env generate-feed.js && node --env-file=../.env prepare-digest.js",
+    "send-email": "node --env-file=../.env send-email.js"
+  },
+  "dependencies": {
+    "nodemailer": "^8.0.5",
+    "rss-parser": "^3.13.0",
+    "twitter-api-v2": "^1.18.0"
+  }
+}

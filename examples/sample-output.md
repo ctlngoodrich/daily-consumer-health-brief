@@ -1,0 +1,59 @@
+# Sample Output — Daily Consumer Health Brief
+
+*This is an example of what the daily email looks like.*
+
+---
+
+## Section 1: Daily News
+
+**[Fitt Insider — Oura's Q1 ring sales outpace Apple Watch in premium segment](https://fittinsider.com/...)**
+Oura reported 340K ring shipments in Q1, a 28% YoY increase, with ASP holding at $349. The growth is notable because it came without a new hardware release — driven entirely by subscription tier upgrades and healthcare channel partnerships with Mayo Clinic and Cleveland Clinic. **For builders**: subscription attach rates in hardware-first consumer health are proving more durable than the market assumed.
+
+**[Rock Health — Digital health funding rebounds to $4.1B in Q1 2025](https://rockhealth.com/...)**
+After six quarters of contraction, Q1 marks a clear inflection. Mental health and women's health led deal volume; AI-enabled diagnostics led by dollar amount. Median Series A pre-money valuation is back to $35M, up from $22M in Q4 2023. Three of the top 10 deals were in chronic disease management with a DTC + employer dual-channel model.
+
+**[Out of Pocket — Why employer health benefits are finally becoming a consumer product](https://outofpocket.substack.com/...)**
+Nikhil argues the shift from HR-administered benefits to employee-directed spending accounts (ICHRA, QSEHRA) is creating a genuine consumer acquisition channel that didn't exist two years ago. The piece includes a tactical breakdown of which companies have built distribution into this channel and which are still treating it as a footnote. Required reading if you're thinking about B2B2C distribution.
+
+**[Fitt Insider Podcast — Eli Lilly's consumer health push with Hims & Hers](https://fittinsider.com/podcast/...)**
+CEO of Hims & Hers Andrew Dudum discusses the GLP-1 access partnership with Eli Lilly announced last month. Key data point: 67% of Hims & Hers GLP-1 users are new to the platform — the drug is a top-of-funnel, not a retention play. The conversation on unit economics for compounded vs. branded is worth the full listen.
+
+---
+
+## Section 2: Builder Insight
+
+### Health Tech Builders — Julia Yoo
+
+**[Why consumer health companies keep failing at enterprise sales](https://healthtechbuilders.substack.com/...)**
+Julia argues that the core failure mode isn't the sales cycle — it's that consumer health teams hire consumer-minded product people and then try to bolt on enterprise relationships as a distribution channel. The result is a product that enterprise buyers can't operationalize. The fix she proposes: treat enterprise as a distinct product surface with its own PM, not a feature request. Sharp piece with a useful 2x2 on company archetypes.
+
+### Podcast — Startup Health NOW
+
+**Episode: "Building the Women's Health Stack" with Joanna Strober (Midi Health)**
+Joanna discusses Midi's expansion from menopause care into perimenopause and PCOS. Key takeaways:
+- Midi's NPS for telehealth visits is 72 — driven almost entirely by appointment length (average 47 min vs. industry 12 min)
+- Their biggest CAC lever isn't paid social; it's employer partnerships where they can do lunch-and-learns with working women 45–55
+- On competition with GLP-1 players entering women's health: "The drug isn't the product. The relationship is the product."
+
+### Podcast — Huberman Lab
+
+**Episode: "Using Light, Temperature & Movement to Optimize Sleep" (solo episode)**
+Practical protocol episode with direct consumer health product implications. Key takeaways:
+- Morning light exposure within 30 min of waking sets circadian rhythm more reliably than any supplement — opens a question about why more wearables don't feature light-based morning nudges
+- Core body temperature drop of 1–3°F is the main physiological trigger for sleep onset; actionable for thermal regulation product builders
+- HRV as a sleep quality proxy is validated, but Huberman flags that the measurement window (first 90 min of sleep) is what most consumer devices miss
+
+### Builder Posts — X/Twitter
+
+**Tom Hale (Oura)**
+Shared a thread on Oura's new health provider API — third-party clinicians can now pull ring data with patient consent directly into their EHR workflow. Notes they've had 200+ provider signups in the first two weeks without any paid promotion. [Link]
+
+**Will Ahmed (Whoop)**
+Posted a long-form reply to a TechCrunch piece questioning whether wearable fatigue data actually changes behavior. His counterpoint: the behavioral change isn't in the data, it's in the social accountability layer — Whoop teams and coach integrations. Cited 3 internal studies showing team feature users have 34% higher weekly active use. [Link]
+
+**Mark Hyman, MD (Function Health)**
+Announced Function Health's new "Biological Age" biomarker panel — 20 blood markers algorithmically weighted to produce a single age score. He's positioning it as a consumer-friendly alternative to epigenetic clocks. The panel is $149 as an add-on. [Link]
+
+---
+
+*Generated by the Daily Consumer Health Brief skill: https://github.com/[your-username]/daily-consumer-health-brief*
