@@ -33,7 +33,10 @@ const builderCutoff = new Date(Date.now() - BUILDER_LOOKBACK_HOURS * 60 * 60 * 1
 
 const parser = new RSSParser({
   timeout: 15000,
-  headers: { 'User-Agent': 'DailyConsumerHealthBrief/1.0' },
+  headers: {
+    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+    'Accept': 'application/rss+xml, application/xml, text/xml, */*',
+  },
 });
 
 // ─── Insight filter config ──────────────────────────────────────────────────
