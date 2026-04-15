@@ -17,7 +17,7 @@ What tracked consumer health founders published, said, or appeared in:
 | Channel | What it finds |
 |---|---|
 | Owned podcasts | Latest episodes from Startup Health NOW, Huberman Lab, The Dr. Hyman Show |
-| Owned substacks | Health Tech Builders (Julia Yoo), The Focus with Mark Hyman |
+| Owned newsletters | Health Tech Builders (Julia Yoo), The Focus with Mark Hyman, The Hemingway Report (Steve Duke) |
 | Podcast Index API | Guest appearances by tracked builders across all indexed podcasts |
 | Google News | Text interviews mentioning tracked builders |
 | YouTube Data API | Interview videos featuring tracked builders |
@@ -157,7 +157,7 @@ Go to **Actions → Daily Consumer Health Brief → Run workflow**. After the fi
 
 **Builder Podcasts**: Startup Health NOW · Huberman Lab · The Dr. Hyman Show
 
-**Builder Substacks**: Health Tech Builders (Julia Yoo) · The Focus with Mark Hyman
+**Builder Newsletters**: Health Tech Builders (Julia Yoo) · The Focus with Mark Hyman · The Hemingway Report (Steve Duke)
 
 **Builder Insights via API**: Podcast Index · Google News · YouTube Data API
 
