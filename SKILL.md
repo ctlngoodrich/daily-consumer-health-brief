@@ -4,8 +4,8 @@ description: >
   Delivers a curated Daily Consumer Health Brief covering industry news and builder insights.
   Use this skill whenever the user runs /daily-health-brief, asks for their daily consumer health
   brief, wants to see what's happening in consumer health today, or asks about news from Fitt Insider,
-  Out of Pocket, Rock Health, or what tracked founders and builders have published or said recently.
-  Also covers mental health industry insights from The Hemingway Report.
+  Out of Pocket, Rock Health, The Hemingway Report, or what tracked founders and builders have
+  published or said recently.
 ---
 
 # Daily Consumer Health Brief
@@ -17,8 +17,8 @@ description: >
 ## What This Skill Does
 
 Delivers a curated daily brief covering:
-1. **Daily News** — Fitt Insider, Out of Pocket, Rock Health
-2. **Builder Insight** — what consumer health founders published, posted, or said in the last 7 days; includes newsletters like Health Tech Builders, The Focus with Mark Hyman, and **The Hemingway Report** (mental health industry)
+1. **Daily News** — Fitt Insider, Out of Pocket, Rock Health, The Hemingway Report
+2. **Builder Insight** — what consumer health founders published, posted, or said in the last 7 days; includes podcasts (Startup Health NOW, Huberman Lab, The Dr. Hyman Show, Business Trip) and newsletters (Health Tech Builders, The Focus with Mark Hyman)
 
 ---
 
