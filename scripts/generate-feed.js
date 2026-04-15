@@ -152,7 +152,7 @@ async function fetchPodcastIndexByPerson(personName, company) {
 // Beehiiv doesn't expose a standard RSS feed. Their /posts?format=rss endpoint
 // returns JSON. We fetch and map it to the standard item shape.
 
-async function fetchBeehiiv(publication) {
+async function fetchBeehiiv(publication, cutoff) {
   const url = `https://${publication.subdomain}.beehiiv.com/posts?format=rss`;
   try {
     const resp = await fetch(url, {
@@ -169,7 +169,7 @@ async function fetchBeehiiv(publication) {
     const items = posts
       .filter(post => {
         const pubDate = post.override_scheduled_at || post.created_at;
-        return isRecent(pubDate, builderCutoff);
+        return isRecent(pubDate, cutoff);
       })
       .map(post => {
         const pubDate = post.override_scheduled_at || post.created_at;
@@ -323,6 +323,12 @@ async function main() {
     }
   }
 
+  // ── 1b. Beehiiv news newsletters (28h) ───────────────────────────────────
+  for (const pub of (newsConfig.beehiiv || [])) {
+    const items = await fetchBeehiiv(pub, newsCutoff);
+    output.news.push(...items);
+  }
+
   // ── 2. Builder substacks (7d) ────────────────────────────────────────────
   console.log('\n── Builder Substacks ──');
   for (const sub of buildersConfig.substacks) {
@@ -333,10 +339,12 @@ async function main() {
   }
 
   // ── 2b. Beehiiv newsletters (7d) ─────────────────────────────────────────
-  console.log('\n── Beehiiv Newsletters ──');
-  for (const pub of (buildersConfig.beehiiv || [])) {
-    const items = await fetchBeehiiv(pub);
-    output.builders.substacks.push(...items);
+  if ((buildersConfig.beehiiv || []).length > 0) {
+    console.log('\n── Beehiiv Newsletters ──');
+    for (const pub of buildersConfig.beehiiv) {
+      const items = await fetchBeehiiv(pub, builderCutoff);
+      output.builders.substacks.push(...items);
+    }
   }
 
   // ── 3. Builder podcasts (7d) ─────────────────────────────────────────────

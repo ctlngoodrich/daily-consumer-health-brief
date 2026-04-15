@@ -9,15 +9,15 @@ A Claude Code skill that delivers a curated daily brief on consumer health news 
 ## What You Get
 
 **Section 1 — Daily News** (past 28h)
-Curated signals from Fitt Insider, Out of Pocket, and Rock Health. Claude picks the 4–6 stories with the most strategic implication for builders and investors, with a tight 2–3 sentence summary per item.
+Curated signals from Fitt Insider, Out of Pocket, Rock Health, and The Hemingway Report. Claude picks the 4–6 stories with the most strategic implication for builders and investors, with a tight 2–3 sentence summary per item.
 
 **Section 2 — Builder Insight** (past 7 days)
 What tracked consumer health founders published, said, or appeared in:
 
 | Channel | What it finds |
 |---|---|
-| Owned podcasts | Latest episodes from Startup Health NOW, Huberman Lab, The Dr. Hyman Show |
-| Owned newsletters | Health Tech Builders (Julia Yoo), The Focus with Mark Hyman, The Hemingway Report (Steve Duke) |
+| Owned podcasts | Latest episodes from Startup Health NOW, Huberman Lab, The Dr. Hyman Show, Business Trip |
+| Owned newsletters | Health Tech Builders (Julia Yoo), The Focus with Mark Hyman |
 | Podcast Index API | Guest appearances by tracked builders across all indexed podcasts |
 | Google News | Text interviews mentioning tracked builders |
 | YouTube Data API | Interview videos featuring tracked builders |
@@ -153,11 +153,11 @@ Go to **Actions → Daily Consumer Health Brief → Run workflow**. After the fi
 
 ## Sources
 
-**News**: Fitt Insider · Out of Pocket · Rock Health
+**News**: Fitt Insider · Out of Pocket · Rock Health · The Hemingway Report
 
-**Builder Podcasts**: Startup Health NOW · Huberman Lab · The Dr. Hyman Show
+**Builder Podcasts**: Startup Health NOW · Huberman Lab · The Dr. Hyman Show · Business Trip
 
-**Builder Newsletters**: Health Tech Builders (Julia Yoo) · The Focus with Mark Hyman · The Hemingway Report (Steve Duke)
+**Builder Newsletters**: Health Tech Builders (Julia Yoo) · The Focus with Mark Hyman
 
 **Builder Insights via API**: Podcast Index · Google News · YouTube Data API
 

@@ -15,16 +15,6 @@
       "feed": "https://markhyman.substack.com/feed"
     }
   ],
-  "beehiiv": [
-    {
-      "id": "hemingway-report",
-      "name": "The Hemingway Report",
-      "author": "Steve Duke",
-      "url": "https://www.thehemingwayreport.com/",
-      "subdomain": "thehemingwayreport",
-      "note": "Weekly deep-dives and analysis for mental health operators and builders"
-    }
-  ],
   "podcasts": [
     {
       "id": "startup-health-now",
@@ -41,6 +31,12 @@
       "name": "The Dr. Hyman Show",
       "rss": "https://feeds.megaphone.fm/thedoctorsfarmacy",
       "note": "Mark Hyman's podcast (formerly The Doctor's Farmacy)"
+    },
+    {
+      "id": "business-trip",
+      "name": "Business Trip",
+      "rss": "https://feeds.buzzsprout.com/1173518.rss",
+      "note": "Founders, investors, and researchers at the intersection of neuroscience and mental health tech"
     }
   ],
   "builders": [
