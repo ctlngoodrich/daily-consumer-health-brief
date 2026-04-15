@@ -148,6 +148,53 @@ async function fetchPodcastIndexByPerson(personName, company) {
   }
 }
 
+// ─── Beehiiv JSON API ───────────────────────────────────────────────────────
+// Beehiiv doesn't expose a standard RSS feed. Their /posts?format=rss endpoint
+// returns JSON. We fetch and map it to the standard item shape.
+
+async function fetchBeehiiv(publication) {
+  const url = `https://${publication.subdomain}.beehiiv.com/posts?format=rss`;
+  try {
+    const resp = await fetch(url, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+        'Accept': 'application/json, */*',
+      },
+      signal: AbortSignal.timeout(15000),
+    });
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    const data = await resp.json();
+    const posts = data.posts || [];
+
+    const items = posts
+      .filter(post => {
+        const pubDate = post.override_scheduled_at || post.created_at;
+        return isRecent(pubDate, builderCutoff);
+      })
+      .map(post => {
+        const pubDate = post.override_scheduled_at || post.created_at;
+        const author = post.authors?.[0]?.name || publication.author;
+        return {
+          id: post.id,
+          title: post.web_title || '',
+          url: `https://${publication.subdomain}.beehiiv.com/p/${post.slug}`,
+          published: pubDate || null,
+          summary: post.web_subtitle || '',
+          source: publication.name,
+          author,
+          platform: 'Newsletter',
+        };
+      })
+      .filter(i => i.url);
+
+    console.log(`  ✓ ${publication.name} (Beehiiv): ${items.length} recent item(s)`);
+    return items;
+  } catch (err) {
+    console.warn(`  ✗ ${publication.name} (Beehiiv): ${err.message}`);
+    return [];
+  }
+}
+
 // ─── Google News RSS ────────────────────────────────────────────────────────
 // Searches Google News for text interviews mentioning the builder by name.
 // No API key required.
@@ -283,6 +330,13 @@ async function main() {
     output.builders.substacks.push(
       ...items.map(i => ({ ...i, author: sub.author, platform: 'Substack' }))
     );
+  }
+
+  // ── 2b. Beehiiv newsletters (7d) ─────────────────────────────────────────
+  console.log('\n── Beehiiv Newsletters ──');
+  for (const pub of (buildersConfig.beehiiv || [])) {
+    const items = await fetchBeehiiv(pub);
+    output.builders.substacks.push(...items);
   }
 
   // ── 3. Builder podcasts (7d) ─────────────────────────────────────────────

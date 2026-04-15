@@ -15,6 +15,16 @@
       "feed": "https://markhyman.substack.com/feed"
     }
   ],
+  "beehiiv": [
+    {
+      "id": "hemingway-report",
+      "name": "The Hemingway Report",
+      "author": "Steve Duke",
+      "url": "https://www.thehemingwayreport.com/",
+      "subdomain": "thehemingwayreport",
+      "note": "Weekly deep-dives and analysis for mental health operators and builders"
+    }
+  ],
   "podcasts": [
     {
       "id": "startup-health-now",
