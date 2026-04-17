@@ -20,24 +20,25 @@
     {
       "id": "out-of-pocket",
       "name": "Out of Pocket",
-      "homepage": "https://outofpocket.substack.com/",
+      "homepage": "https://www.outofpocket.health/",
       "feeds": [
         {
           "name": "Newsletter & Articles",
-          "url": "https://outofpocket.substack.com/feed",
-          "type": "substack"
+          "url": "https://www.outofpocket.health/p/rss.xml",
+          "type": "rss"
         }
       ]
     },
     {
       "id": "rock-health",
       "name": "Rock Health",
-      "homepage": "https://rockhealth.com",
+      "homepage": "https://rockhealthcapital.com",
       "feeds": [
         {
-          "name": "Blog & Reports",
-          "url": "https://rockhealth.com/feed/",
-          "type": "rss"
+          "name": "Reports & Research",
+          "url": "https://news.google.com/rss/search?q=site:rockhealthcapital.com&hl=en-US&gl=US&ceid=US:en",
+          "type": "rss",
+          "note": "Rock Health's own RSS feed is defunct; using Google News to surface their publications"
         }
       ]
     }

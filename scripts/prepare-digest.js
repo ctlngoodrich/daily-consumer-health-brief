@@ -41,13 +41,18 @@ function main() {
 
   const statePath = path.join(ROOT, 'state-feed.json');
   const state = JSON.parse(fs.readFileSync(statePath, 'utf8'));
-  const seenIds = new Set(state.seen_ids || []);
+  // Normalise all stored IDs so whitespace/case differences don't bypass dedup
+  const seenIds = new Set((state.seen_ids || []).map(id => id.trim().toLowerCase()));
   const seenUrls = new Set(); // within-run URL dedup
+
+  function normaliseId(id) {
+    return (id || '').trim().toLowerCase();
+  }
 
   function isNew(item) {
     const id = item.id || item.url;
     if (!id) return false;
-    if (seenIds.has(id)) return false;
+    if (seenIds.has(normaliseId(id))) return false;
     const normUrl = normaliseUrl(item.url);
     if (normUrl && seenUrls.has(normUrl)) return false;
     seenUrls.add(normUrl);

@@ -217,9 +217,10 @@ async function sendEmail(briefText, date) {
 
 function updateState(newIds) {
   const MAX_STATE_IDS = 500; // prevent unbounded growth
+  const normalise = id => (id || '').trim().toLowerCase();
   const updated = {
     last_run: new Date().toISOString(),
-    seen_ids: [...new Set([...(state.seen_ids || []), ...newIds])].slice(-MAX_STATE_IDS),
+    seen_ids: [...new Set([...(state.seen_ids || []), ...newIds].map(normalise))].slice(-MAX_STATE_IDS),
   };
   fs.writeFileSync(statePath, JSON.stringify(updated, null, 2));
   console.log(`✅ state-feed.json updated (${updated.seen_ids.length} seen IDs)`);
