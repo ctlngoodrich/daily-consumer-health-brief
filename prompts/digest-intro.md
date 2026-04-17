@@ -23,6 +23,7 @@ Source — Title ([link](url))
 - Do not fabricate or speculate beyond what the source says
 - Do not add commentary on what it means for builders — report the facts, let the reader draw their own conclusions
 - Skip press releases without substance and generic health tips
+- For a16z Bio+Health: only include items about bio, health, biotech, life sciences, or digital health — skip crypto, enterprise software, gaming, or policy items unrelated to health
 
 ---
 

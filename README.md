@@ -9,7 +9,7 @@ A Claude Code skill that delivers a curated daily brief on consumer health news 
 ## What You Get
 
 **Section 1 — Daily News** (past 28h)
-Curated signals from Fitt Insider, Out of Pocket, Rock Health, and The Hemingway Report. Claude picks the 4–6 stories with the most strategic implication for builders and investors, with a tight 2–3 sentence summary per item.
+Curated signals from Fitt Insider, Out of Pocket, Rock Health, The Hemingway Report, and a16z Bio+Health. Claude picks the 4–6 stories with the most strategic implication for builders and investors, with a tight 2–3 sentence summary per item.
 
 **Section 2 — Builder Insight** (past 7 days)
 What tracked consumer health founders published, said, or appeared in:
@@ -153,7 +153,7 @@ Go to **Actions → Daily Consumer Health Brief → Run workflow**. After the fi
 
 ## Sources
 
-**News**: Fitt Insider · Out of Pocket · Rock Health · The Hemingway Report
+**News**: Fitt Insider · Out of Pocket · Rock Health · The Hemingway Report · a16z Bio+Health
 
 **Builder Podcasts**: Startup Health NOW · Huberman Lab · The Dr. Hyman Show · Business Trip
 

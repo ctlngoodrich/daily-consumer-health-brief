@@ -41,6 +41,19 @@
           "note": "Rock Health's own RSS feed is defunct; using Google News to surface their publications"
         }
       ]
+    },
+    {
+      "id": "a16z-bio-health",
+      "name": "a16z Bio+Health",
+      "homepage": "https://a16z.com/bio-health/",
+      "feeds": [
+        {
+          "name": "Newsletter",
+          "url": "https://www.a16z.news/feed",
+          "type": "rss",
+          "note": "Full a16z newsletter — Claude should only include items relevant to bio, health, biotech, or life sciences"
+        }
+      ]
     }
   ],
   "beehiiv": [
