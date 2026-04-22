@@ -29,7 +29,7 @@ const companiesConfig = JSON.parse(fs.readFileSync(path.join(ROOT, 'feed-compani
 
 const NEWS_LOOKBACK_HOURS = parseInt(process.env.NEWS_LOOKBACK_HOURS || '28', 10);
 const BUILDER_LOOKBACK_HOURS = parseInt(process.env.BUILDER_LOOKBACK_HOURS || '168', 10);
-const COMPANY_LOOKBACK_HOURS = parseInt(process.env.COMPANY_LOOKBACK_HOURS || '28', 10);
+const COMPANY_LOOKBACK_HOURS = parseInt(process.env.COMPANY_LOOKBACK_HOURS || '48', 10);
 const newsCutoff = new Date(Date.now() - NEWS_LOOKBACK_HOURS * 60 * 60 * 1000);
 const builderCutoff = new Date(Date.now() - BUILDER_LOOKBACK_HOURS * 60 * 60 * 1000);
 const companyCutoff = new Date(Date.now() - COMPANY_LOOKBACK_HOURS * 60 * 60 * 1000);
