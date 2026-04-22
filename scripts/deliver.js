@@ -129,6 +129,30 @@ function buildPrompt(digest) {
     prompt += `*No new builder content fetched today.*\n\n`;
   }
 
+  // Company watchlist section
+  const cw = digest.sections.company_watchlist || {};
+  const hasCompanyNews =
+    (cw.publicly_traded?.length || 0) +
+    (cw.ma_exits?.length || 0) +
+    (cw.unicorns?.length || 0) > 0;
+
+  if (hasCompanyNews) {
+    prompt += `---\n\n## RAW DATA — SECTION 3: COMPANY WATCHLIST\n\n`;
+
+    if (cw.publicly_traded?.length > 0) {
+      prompt += `### Publicly Traded Companies\n`;
+      prompt += JSON.stringify(cw.publicly_traded, null, 2) + '\n\n';
+    }
+    if (cw.ma_exits?.length > 0) {
+      prompt += `### M&A Exits\n`;
+      prompt += JSON.stringify(cw.ma_exits, null, 2) + '\n\n';
+    }
+    if (cw.unicorns?.length > 0) {
+      prompt += `### $1B+ Unicorns\n`;
+      prompt += JSON.stringify(cw.unicorns, null, 2) + '\n\n';
+    }
+  }
+
   prompt += `---\n\nNow write the complete Daily Consumer Health Brief following the assembly instructions above.`;
   return prompt;
 }
@@ -230,6 +254,7 @@ function updateState(newIds) {
 
 async function main() {
   const bi = digest.sections.builder_insight;
+  const cw = digest.sections.company_watchlist || {};
   const totalItems =
     digest.sections.daily_news.length +
     (bi.substacks?.length || 0) +
@@ -237,7 +262,10 @@ async function main() {
     (bi.podcast_guests?.length || 0) +
     (bi.interviews?.length || 0) +
     (bi.youtube?.length || 0) +
-    (bi.mentions?.length || 0);
+    (bi.mentions?.length || 0) +
+    (cw.publicly_traded?.length || 0) +
+    (cw.ma_exits?.length || 0) +
+    (cw.unicorns?.length || 0);
 
   if (totalItems === 0) {
     console.log('ℹ No new content to deliver. Skipping email.');

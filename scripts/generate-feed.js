@@ -25,11 +25,14 @@ const ROOT = path.join(__dirname, '..');
 
 const newsConfig = JSON.parse(fs.readFileSync(path.join(ROOT, 'feed-news.json'), 'utf8'));
 const buildersConfig = JSON.parse(fs.readFileSync(path.join(ROOT, 'feed-builders.json'), 'utf8'));
+const companiesConfig = JSON.parse(fs.readFileSync(path.join(ROOT, 'feed-companies.json'), 'utf8'));
 
 const NEWS_LOOKBACK_HOURS = parseInt(process.env.NEWS_LOOKBACK_HOURS || '28', 10);
 const BUILDER_LOOKBACK_HOURS = parseInt(process.env.BUILDER_LOOKBACK_HOURS || '168', 10);
+const COMPANY_LOOKBACK_HOURS = parseInt(process.env.COMPANY_LOOKBACK_HOURS || '28', 10);
 const newsCutoff = new Date(Date.now() - NEWS_LOOKBACK_HOURS * 60 * 60 * 1000);
 const builderCutoff = new Date(Date.now() - BUILDER_LOOKBACK_HOURS * 60 * 60 * 1000);
+const companyCutoff = new Date(Date.now() - COMPANY_LOOKBACK_HOURS * 60 * 60 * 1000);
 
 const parser = new RSSParser({
   timeout: 15000,
@@ -199,6 +202,25 @@ async function fetchBeehiiv(publication, cutoff) {
 // Searches Google News for text interviews mentioning the builder by name.
 // No API key required.
 
+async function fetchCompanyNews(company, groupId) {
+  let query;
+  if (groupId === 'publicly_traded' && company.ticker) {
+    query = `${company.ticker} "${company.name}"`;
+  } else if (company.search_query) {
+    query = company.search_query;
+  } else {
+    query = `"${company.name}" health`;
+  }
+  const url = `https://news.google.com/rss/search?q=${encodeURIComponent(query)}&hl=en-US&gl=US&ceid=US:en`;
+  const items = await fetchRSS(url, company.name, companyCutoff);
+  return items.slice(0, 3).map(i => ({
+    ...i,
+    company: company.name,
+    ticker: company.ticker || null,
+    group_id: groupId,
+  }));
+}
+
 async function fetchGoogleNewsInterviews(personName, company) {
   const query = encodeURIComponent(`"${personName}" interview`);
   const url = `https://news.google.com/rss/search?q=${query}&hl=en-US&gl=US&ceid=US:en`;
@@ -297,6 +319,7 @@ async function main() {
     generated_at: new Date().toISOString(),
     news_cutoff: newsCutoff.toISOString(),
     builder_cutoff: builderCutoff.toISOString(),
+    company_cutoff: companyCutoff.toISOString(),
     news: [],
     builders: {
       substacks: [],
@@ -305,6 +328,11 @@ async function main() {
       interviews: [],      // Google News: text interviews
       youtube: [],         // YouTube channel: official videos
       mentions: [],        // Mention scan: name matches in fetched content
+    },
+    companies: {
+      publicly_traded: [],
+      ma_exits: [],
+      unicorns: [],
     },
   };
 
@@ -402,9 +430,26 @@ async function main() {
   output.builders.mentions = scanForBuilderMentions(allFetched);
   console.log(`  ✓ Insight-worthy builder mentions: ${output.builders.mentions.length}`);
 
+  // ── 8. Company watchlist news (28h) ──────────────────────────────────────
+  console.log('\n── Company Watchlist ──');
+  for (const group of companiesConfig.groups) {
+    const key = group.id;
+    console.log(`  ${group.label} (${group.companies.length} companies)...`);
+    for (const company of group.companies) {
+      const items = await fetchCompanyNews(company, key);
+      output.companies[key].push(...items);
+    }
+    console.log(`  ✓ ${group.label}: ${output.companies[key].length} article(s)`);
+  }
+
   // ── Write output ─────────────────────────────────────────────────────────
   const outPath = path.join(ROOT, 'raw-feed.json');
   fs.writeFileSync(outPath, JSON.stringify(output, null, 2));
+
+  const companyTotal =
+    output.companies.publicly_traded.length +
+    output.companies.ma_exits.length +
+    output.companies.unicorns.length;
 
   const total =
     output.news.length +
@@ -413,7 +458,8 @@ async function main() {
     output.builders.podcast_guests.length +
     output.builders.interviews.length +
     output.builders.youtube.length +
-    output.builders.mentions.length;
+    output.builders.mentions.length +
+    companyTotal;
 
   console.log(`\n✅ raw-feed.json written — ${total} total items`);
   console.log(`   News: ${output.news.length}`);
@@ -423,6 +469,9 @@ async function main() {
   console.log(`   Builder interviews (Google News): ${output.builders.interviews.length}`);
   console.log(`   Builder YouTube: ${output.builders.youtube.length}`);
   console.log(`   Builder mentions (scan): ${output.builders.mentions.length}`);
+  console.log(`   Company watchlist — Publicly Traded: ${output.companies.publicly_traded.length}`);
+  console.log(`   Company watchlist — M&A Exits: ${output.companies.ma_exits.length}`);
+  console.log(`   Company watchlist — Unicorns: ${output.companies.unicorns.length}`);
 }
 
 main().catch(err => {

@@ -15,6 +15,7 @@ const ROOT = path.join(__dirname, '..');
 
 const MAX_NEWS_ITEMS = 8;
 const MAX_SUMMARY_CHARS = 1200;
+const MAX_COMPANY_ITEMS_PER_GROUP = 20;
 
 function truncate(str, max) {
   if (!str) return '';
@@ -145,10 +146,40 @@ function main() {
       insight_worthy: true,
     }));
 
+  // ── 8. Company watchlist ───────────────────────────────────────────────────
+  function mapCompanyItem(i) {
+    return {
+      ...mapBase(i),
+      company: i.company,
+      ticker: i.ticker || null,
+      source: i.source,
+    };
+  }
+
+  const rawCompanies = raw.companies || {};
+  const companyPublicItems = (rawCompanies.publicly_traded || [])
+    .filter(isNew).filter(i => i.url)
+    .sort((a, b) => new Date(b.published || 0) - new Date(a.published || 0))
+    .slice(0, MAX_COMPANY_ITEMS_PER_GROUP)
+    .map(mapCompanyItem);
+
+  const companyMaItems = (rawCompanies.ma_exits || [])
+    .filter(isNew).filter(i => i.url)
+    .sort((a, b) => new Date(b.published || 0) - new Date(a.published || 0))
+    .slice(0, MAX_COMPANY_ITEMS_PER_GROUP)
+    .map(mapCompanyItem);
+
+  const companyUnicornItems = (rawCompanies.unicorns || [])
+    .filter(isNew).filter(i => i.url)
+    .sort((a, b) => new Date(b.published || 0) - new Date(a.published || 0))
+    .slice(0, MAX_COMPANY_ITEMS_PER_GROUP)
+    .map(mapCompanyItem);
+
   // ── Collect new IDs for state update ──────────────────────────────────────
   const allNewIds = [
     ...newsItems, ...substackItems, ...podcastItems,
     ...podcastGuestItems, ...interviewItems, ...youtubeItems, ...mentionItems,
+    ...companyPublicItems, ...companyMaItems, ...companyUnicornItems,
   ].map(i => i.id).filter(Boolean);
 
   // ── Write digest-ready.json ────────────────────────────────────────────────
@@ -165,6 +196,11 @@ function main() {
         youtube: youtubeItems,                // official YouTube channel videos
         mentions: mentionItems,               // mention scan matches
       },
+      company_watchlist: {
+        publicly_traded: companyPublicItems,
+        ma_exits: companyMaItems,
+        unicorns: companyUnicornItems,
+      },
     },
     new_ids: allNewIds,
   };
@@ -180,9 +216,13 @@ function main() {
   console.log(`   Interviews (Google News): ${interviewItems.length}`);
   console.log(`   YouTube: ${youtubeItems.length}`);
   console.log(`   Mentions (scan): ${mentionItems.length}`);
+  console.log(`   Company watchlist — Publicly Traded: ${companyPublicItems.length}`);
+  console.log(`   Company watchlist — M&A Exits: ${companyMaItems.length}`);
+  console.log(`   Company watchlist — $1B+ Unicorns: ${companyUnicornItems.length}`);
 
   const total = newsItems.length + substackItems.length + podcastItems.length +
-    podcastGuestItems.length + interviewItems.length + youtubeItems.length + mentionItems.length;
+    podcastGuestItems.length + interviewItems.length + youtubeItems.length + mentionItems.length +
+    companyPublicItems.length + companyMaItems.length + companyUnicornItems.length;
   if (total === 0) console.log('\nℹ No new content found.');
 }
 

@@ -48,6 +48,29 @@ Source — Title ([link](url))
 
 ---
 
+## Section 3: Company Watchlist
+
+Report on notable news from the tracked company groups. Only surface items with genuine business significance — funding rounds, partnerships, leadership changes with strategic implications, regulatory decisions, product launches, or market moves. Skip routine earnings recaps, minor personnel changes, and generic press releases.
+
+**Format for each item:**
+```
+[Company Name] ([TICKER] or Acquired/Private) — Title ([link](url))
+1–2 sentence summary: what happened and why it is notable.
+```
+
+**Groups:**
+- **Publicly Traded** — current public digital health stocks
+- **M&A Exits** — companies acquired in notable digital health deals  
+- **$1B+ Unicorns** — private digital health companies valued at $1B+
+
+**Rules:**
+- Include 2–4 items per group maximum. If a group has no noteworthy news, omit that group entirely — do not write "No news."
+- If a company already appeared in Section 1 (Daily News), do not repeat it here — skip it.
+- Every item must have a source link.
+- Do not speculate beyond what the source says.
+
+---
+
 ## Tone & Format
 
 - Tight, smart, no filler. Written for someone with 5 minutes and high standards.
