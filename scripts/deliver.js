@@ -75,10 +75,10 @@ function buildPrompt(digest) {
   prompt += `---\n\n`;
 
   // News section
-  prompt += `## RAW DATA — SECTION 1: DAILY NEWS\n\n`;
+  prompt += `## RAW DATA — SECTION 1: WEEKLY NEWS\n\n`;
   prompt += `Summarization instructions:\n${summarizeNews}\n\n`;
   if (daily_news.length === 0) {
-    prompt += `*No new news items fetched today.*\n\n`;
+    prompt += `*No new news items fetched this week.*\n\n`;
   } else {
     prompt += `Items (${daily_news.length} total — select the 4–6 most relevant):\n\n`;
     prompt += JSON.stringify(daily_news, null, 2) + '\n\n';
@@ -126,7 +126,7 @@ function buildPrompt(digest) {
   const hasBuilderContent = ['substacks','podcasts','podcast_guests','interviews','youtube','mentions']
     .some(k => builder_insight[k]?.length > 0);
   if (!hasBuilderContent) {
-    prompt += `*No new builder content fetched today.*\n\n`;
+    prompt += `*No new builder content fetched this week.*\n\n`;
   }
 
   // Company watchlist section
@@ -153,7 +153,7 @@ function buildPrompt(digest) {
     }
   }
 
-  prompt += `---\n\nNow write the complete Daily Consumer Health Brief following the assembly instructions above.`;
+  prompt += `---\n\nNow write the complete Weekly Consumer Health Brief following the assembly instructions above.`;
   return prompt;
 }
 
@@ -200,7 +200,7 @@ function buildEmail(briefText, date) {
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
 <body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;max-width:680px;margin:0 auto;padding:24px;color:#1a1a1a;background:#ffffff;">
   <div style="border-bottom:2px solid #1a1a2e;padding-bottom:12px;margin-bottom:24px;">
-    <h1 style="margin:0;font-size:20px;color:#1a1a2e;">Daily Consumer Health Brief</h1>
+    <h1 style="margin:0;font-size:20px;color:#1a1a2e;">Weekly Consumer Health Brief</h1>
     <p style="margin:4px 0 0;font-size:13px;color:#666;">${date}</p>
   </div>
   <div style="font-size:15px;line-height:1.6;">
@@ -223,11 +223,11 @@ async function sendEmail(briefText, date) {
     },
   });
 
-  const subject = `Daily Consumer Health Brief — ${date}`;
+  const subject = `Weekly Consumer Health Brief — ${date}`;
   const htmlBody = buildEmail(briefText, date);
 
   await transporter.sendMail({
-    from: `"Daily Health Brief" <${process.env.EMAIL_FROM}>`,
+    from: `"Weekly Health Brief" <${process.env.EMAIL_FROM}>`,
     to: process.env.EMAIL_TO,
     subject,
     html: htmlBody,
@@ -242,12 +242,22 @@ async function sendEmail(briefText, date) {
 function updateState(newIds) {
   const MAX_STATE_IDS = 500; // prevent unbounded growth
   const normalise = id => (id || '').trim().toLowerCase();
+
+  // Record companies featured this week so prepare-digest.js can skip them next week
+  const cw = digest.sections.company_watchlist || {};
+  const lastBriefCompanies = [
+    ...(cw.publicly_traded || []),
+    ...(cw.ma_exits || []),
+    ...(cw.unicorns || []),
+  ].map(i => i.company).filter(Boolean);
+
   const updated = {
     last_run: new Date().toISOString(),
     seen_ids: [...new Set([...(state.seen_ids || []), ...newIds].map(normalise))].slice(-MAX_STATE_IDS),
+    last_brief_companies: lastBriefCompanies,
   };
   fs.writeFileSync(statePath, JSON.stringify(updated, null, 2));
-  console.log(`✅ state-feed.json updated (${updated.seen_ids.length} seen IDs)`);
+  console.log(`✅ state-feed.json updated (${updated.seen_ids.length} seen IDs, ${lastBriefCompanies.length} companies on cooldown next week)`);
 }
 
 // ─── Main ─────────────────────────────────────────────────────────────────────
@@ -282,7 +292,7 @@ async function main() {
 
   if (DRY_RUN) {
     const previewPath = path.join(ROOT, 'digest-preview.md');
-    fs.writeFileSync(previewPath, `# Daily Consumer Health Brief — ${date}\n\n${briefText}`);
+    fs.writeFileSync(previewPath, `# Weekly Consumer Health Brief — ${date}\n\n${briefText}`);
     console.log(`\n✅ Dry run complete — brief saved to digest-preview.md`);
     console.log('   (No email sent, state not updated)\n');
     console.log('─'.repeat(60));

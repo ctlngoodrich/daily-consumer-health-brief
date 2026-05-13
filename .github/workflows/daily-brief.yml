@@ -1,9 +1,9 @@
-name: Daily Consumer Health Brief
+name: Weekly Consumer Health Brief
 
 on:
-  # Runs at 9:00 AM Pacific Time (16:00 UTC), every day
+  # Runs at 9:00 AM Pacific Time (16:00 UTC), every Monday
   schedule:
-    - cron: '0 16 * * *'
+    - cron: '0 16 * * 1'
 
   # Allow manual trigger from the Actions tab
   workflow_dispatch:
@@ -34,8 +34,9 @@ jobs:
           PODCAST_INDEX_API_KEY: ${{ secrets.PODCAST_INDEX_API_KEY }}
           PODCAST_INDEX_API_SECRET: ${{ secrets.PODCAST_INDEX_API_SECRET }}
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
-          NEWS_LOOKBACK_HOURS: '28'
+          NEWS_LOOKBACK_HOURS: '168'
           BUILDER_LOOKBACK_HOURS: '168'
+          COMPANY_LOOKBACK_HOURS: '168'
         run: node generate-feed.js
 
       - name: Prepare digest

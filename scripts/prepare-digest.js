@@ -46,6 +46,16 @@ function main() {
   const seenIds = new Set((state.seen_ids || []).map(id => id.trim().toLowerCase()));
   const seenUrls = new Set(); // within-run URL dedup
 
+  // Companies that appeared in last week's brief are on a 1-week cooldown
+  const cooldownCompanies = new Set(
+    (state.last_brief_companies || []).map(c => c.trim().toLowerCase())
+  );
+
+  function isOnCooldown(item) {
+    if (!item.company) return false;
+    return cooldownCompanies.has(item.company.trim().toLowerCase());
+  }
+
   function normaliseId(id) {
     return (id || '').trim().toLowerCase();
   }
@@ -158,18 +168,21 @@ function main() {
 
   const rawCompanies = raw.companies || {};
   const companyPublicItems = (rawCompanies.publicly_traded || [])
+    .filter(i => !isOnCooldown(i))
     .filter(isNew).filter(i => i.url)
     .sort((a, b) => new Date(b.published || 0) - new Date(a.published || 0))
     .slice(0, MAX_COMPANY_ITEMS_PER_GROUP)
     .map(mapCompanyItem);
 
   const companyMaItems = (rawCompanies.ma_exits || [])
+    .filter(i => !isOnCooldown(i))
     .filter(isNew).filter(i => i.url)
     .sort((a, b) => new Date(b.published || 0) - new Date(a.published || 0))
     .slice(0, MAX_COMPANY_ITEMS_PER_GROUP)
     .map(mapCompanyItem);
 
   const companyUnicornItems = (rawCompanies.unicorns || [])
+    .filter(i => !isOnCooldown(i))
     .filter(isNew).filter(i => i.url)
     .sort((a, b) => new Date(b.published || 0) - new Date(a.published || 0))
     .slice(0, MAX_COMPANY_ITEMS_PER_GROUP)
@@ -208,8 +221,11 @@ function main() {
   const outPath = path.join(ROOT, 'digest-ready.json');
   fs.writeFileSync(outPath, JSON.stringify(digest, null, 2));
 
+  if (cooldownCompanies.size > 0) {
+    console.log(`ℹ  Company cooldown active for: ${[...cooldownCompanies].join(', ')}`);
+  }
   console.log('✅ digest-ready.json written');
-  console.log(`   Daily News: ${newsItems.length}`);
+  console.log(`   Weekly News: ${newsItems.length}`);
   console.log(`   Builder substacks: ${substackItems.length}`);
   console.log(`   Builder podcasts: ${podcastItems.length}`);
   console.log(`   Podcast guests (Podcast Index): ${podcastGuestItems.length}`);
